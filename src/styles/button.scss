@@ -1,0 +1,37 @@
+button {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.875rem;
+}
+
+.normal {
+  max-width: 11.15rem;
+  width: 100%;
+  height: 2.5rem;
+  background: #D16FFF;
+  border-radius: 20px;
+  border: #D16FFF;
+  color: white;
+
+  &:hover {
+    transition: 0.3s;
+    color: white;
+    background-color: #c547ff;
+  }
+}
+
+.outline {
+  max-width: 11.15rem;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid #D16FFF;
+  border-radius: 20px;
+  color: #D16FFF;
+
+  &:hover {
+    transition: 0.3s;
+    color: white;
+    background-color: #c547ff;
+  }
+}
