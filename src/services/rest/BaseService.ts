@@ -58,7 +58,7 @@ export default class BaseService<T> {
         }
     }
 
-    public async getAll(): Promise<IServiceResponse<T[]>> {
+    public async getAll(): Promise<IServiceResponse<T[] | T>> {
         try {
             const response = await this.connection.get<T[]>(this.endpointName);
             
