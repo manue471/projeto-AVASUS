@@ -3,7 +3,7 @@
     <div class="card-grid">
       <div
         class="card"
-        v-for="course in cardArray.slice(0, 6)"
+        v-for="course in cardArray"
         :key="course.id"
       >
         <div class="card-header">

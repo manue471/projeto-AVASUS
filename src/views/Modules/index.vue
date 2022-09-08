@@ -1,17 +1,19 @@
 <template>
   <div class="modules">
     <h1>Módulos Educacionais</h1>
-    JwPagination
-    <courses-with-filter :cardArray="courses"></courses-with-filter>
+    <paginate v-slot="courses" :value="courses">
+      <courses-with-filter :cardArray="courses"></courses-with-filter>
+    </paginate>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 
 // Components
 import CoursesWithFilter from "@/components/CoursesWithFilter/index.vue";
+import Paginate from '@/components/Paginate/index.vue'
 
 // Services
 import CoursesService from "@/services/rest/CoursesService";
@@ -24,6 +26,7 @@ const courseService = new CoursesService();
 @Component({
   components: {
     CoursesWithFilter,
+    Paginate
   },
 })
 export default class SingleModule extends Vue {
@@ -57,10 +60,13 @@ export default class SingleModule extends Vue {
     }
   }
 
-  public async mounted(): Promise<CoursesModel[] | undefined> {
-    console.log(this.categorieArrayList);
+  public async mounted(): Promise<void> {
+    await this.handleGetCourses();
+  }
 
-    return await this.handleGetCourses();
+  @Watch('courses')
+  public handleCourses() {
+    console.log(this.courses);
   }
 }
 </script>
