@@ -1,19 +1,22 @@
 <template>
   <div class="modules">
     <h1>Módulos Educacionais</h1>
-    <paginate v-slot="courses" :value="courses">
-      <courses-with-filter :cardArray="courses"></courses-with-filter>
+    <paginate v-slot="paginatedCourses" :value="paginatedCourses">
+      <courses-with-filter
+        :categorieArray="categorieArrayList"
+        :paginatedArray="paginatedCourses"
+        :cardArray="courses"
+      ></courses-with-filter>
     </paginate>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 
 // Components
 import CoursesWithFilter from "@/components/CoursesWithFilter/index.vue";
-import Paginate from '@/components/Paginate/index.vue'
+import Paginate from "@/components/Paginate/index.vue";
 
 // Services
 import CoursesService from "@/services/rest/CoursesService";
@@ -26,17 +29,19 @@ const courseService = new CoursesService();
 @Component({
   components: {
     CoursesWithFilter,
-    Paginate
+    Paginate,
   },
 })
 export default class SingleModule extends Vue {
-  public courses: CoursesModel[];
+  public paginatedCourses: CoursesModel[];
   public categories: string[];
+  public courses: CoursesModel[];
 
   constructor() {
     super();
-    this.courses = Array(new CoursesModel());
+    this.paginatedCourses = Array(new CoursesModel());
     this.categories = [];
+    this.courses = [];
   }
 
   // Computeds:
@@ -44,8 +49,8 @@ export default class SingleModule extends Vue {
     return this.$route.params.id;
   }
 
-  public get categorieArrayList(): CoursesModel[] {
-    return this.courses.filter((course) => course.cateroria);
+  public get categorieArrayList(): string[] {
+    return [...new Set(this.courses.map((course) => course.cateroria))];
   }
 
   // Methods
@@ -53,10 +58,11 @@ export default class SingleModule extends Vue {
     const { data } = await courseService.getAll();
 
     if (data) {
-      data?.map((course: any) => {
+      (data as CoursesModel[]).map((course: any) => {
         course.avaliacao = Number(course.avaliacao);
       });
-      return (this.courses = data);
+      this.paginatedCourses = data as CoursesModel[];
+      return (this.courses = data as CoursesModel[]);
     }
   }
 
@@ -64,9 +70,13 @@ export default class SingleModule extends Vue {
     await this.handleGetCourses();
   }
 
-  @Watch('courses')
-  public handleCourses() {
-    console.log(this.courses);
+  @Watch("courses")
+  public async handleCourses() {
+    if (this.courses.length == 220) {
+      return
+    } else {
+      this.paginatedCourses = this.courses
+    }
   }
 }
 </script>
@@ -79,7 +89,7 @@ export default class SingleModule extends Vue {
   width: 100vw;
   h1 {
     margin: 1.2rem 0;
-    color: #7dc143;
+    color: #F6303F;
   }
 }
 </style>

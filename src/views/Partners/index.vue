@@ -2,12 +2,11 @@
   <div>
     <h1>Nossos parceiros</h1>
     <div class="partners">
-      <PartnerCard
-        v-for="partner in partners"
-        :key="partner.id"
-        :partnerImage="partner.capa"
-        :partnerTitle="partner.titulo"
-      ></PartnerCard>
+      <paginate v-slot="partners" :value="partners">
+        <partner-card
+          :partnersArray="partners"
+        ></partner-card>
+      </paginate>
     </div>
   </div>
 </template>
@@ -17,6 +16,7 @@ import { Component, Vue } from "vue-property-decorator";
 
 // Components
 import PartnerCard from "@/components/PartnerCard/index.vue";
+import Paginate from "@/components/Paginate/index.vue";
 
 // Services
 import CoursesService from "@/services/rest/CoursesService";
@@ -32,6 +32,7 @@ const partnersService = new PartnersService();
 @Component({
   components: {
     PartnerCard,
+    Paginate
   },
 })
 export default class Partners extends Vue {
@@ -49,7 +50,7 @@ export default class Partners extends Vue {
     const { data } = await partnersService.getAll();
 
     if (data) {
-      return (this.partners = data);
+      return (this.partners = data as PartnersModel[]);
     }
   }
 
@@ -60,15 +61,18 @@ export default class Partners extends Vue {
 </script>
 <style lang="scss" scoped>
 .partners {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
-  justify-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 4rem;
+  text-align: start;
 }
   h1 {
     margin: 1.2rem 0;
-    color: #7dc143;
+    color: #F6303F;
+    text-align: left;
+    padding: 0 4rem;
+    width: 100%;
   }
 </style>
