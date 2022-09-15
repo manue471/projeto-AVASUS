@@ -1,8 +1,7 @@
 <template>
   <div class="header">
     <div class="logo">
-      <img src="../../../public/assets/book.svg" alt="" />
-      <h2>Elder book</h2>
+      <img src="/assets/AVASUS.png" alt="" />
     </div>
     <nav class="nav-header">
       <ul>
@@ -59,7 +58,8 @@ export default class CustomHeader extends Vue {
   width: 100%;
   height: 100%;
   background: white;
-  box-shadow: 0px 0.25rem 0.5rem rgba(121, 121, 121, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+
 
   .logo {
     padding: 0 1rem;
@@ -71,31 +71,36 @@ export default class CustomHeader extends Vue {
     width: 100%;
   }
 
+  nav {
+    padding: 0;
+  }
+
   .nav-header ul {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 2rem;
-    padding: 2rem 1rem;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
     width: 100%;
 
     & li {
-      font-size: 1.02rem;
+      font-size: 0.9rem;
       list-style-type: none;
+      white-space: nowrap;
+      gap: 1rem;
 
       a {
         display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
         color: #2f2e41;
         text-decoration: none;
         font-family: "Montserrat", sans-serif;
 
         &.active {
-          color: #d16fff;
+          color: #f6303f;
         }
         &:hover {
-          color: #d16fff;
+          color: #f6303f;
           transition: 0.3s;
         }
       }
@@ -105,20 +110,18 @@ export default class CustomHeader extends Vue {
   .interact {
     display: flex;
     flex-direction: row;
-    gap: 0.8rem;
     align-items: center;
     justify-content: center;
     width: 100%;
   }
 
   .search {
-    background: rgba(209, 111, 255, 0.1);
+    background: rgba(112, 112, 112, 0.1);
     border: rgba(209, 111, 255, 0.1);
     border-radius: 1.25rem;
     max-height: 2rem;
-    padding: 0.5rem 2.5rem;
+    padding: 1rem 2.6rem;
     height: 100%;
-    width: 100%;
   }
 
   h1 {
@@ -128,8 +131,6 @@ export default class CustomHeader extends Vue {
   }
 }
 .input-search {
-  max-width: 22rem;
-  width: 100%;
   display: flex;
 }
 .glass {

@@ -26,10 +26,9 @@
         <div>
           <h1>Redes Sociais</h1>
           <div>
-            <img src="/assets/facebook.svg" alt="" /><img
-              src="/assets/twiiter.svg"
-              alt=""
-            /><img src="/assets/instagram.svg" alt="" />
+            <img src="/assets/facebook.svg" alt="facebook" />
+            <img src="/assets/twiiter.svg" alt="twitter" />
+            <img src="/assets/instagram.svg" alt="instagram" />
           </div>
         </div>
       </div>
@@ -57,7 +56,22 @@ enum CarouselDirecitons {
 @Component({
   components: {},
 })
-export default class CustomFooter extends Vue {}
+export default class CustomFooter extends Vue {
+  
+
+  public method() {
+
+const arr = ['1', '2', '2', '1', '3', '3']
+const nonRepeatArr = [...new Set(arr)]
+
+console.log(nonRepeatArr) // ['1', '2', '3']
+
+  }
+
+  public mounted() {
+    this.method()
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -84,7 +98,7 @@ export default class CustomFooter extends Vue {}
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #7dc143;
+    background: #f6303f;
     width: 100%;
     max-height: 16.5rem;
     height: 100%;
@@ -137,13 +151,14 @@ export default class CustomFooter extends Vue {}
         ul {
           display: flex;
           flex-direction: column;
-          font-size: 1.125rem;
-          gap: 1rem;
+          font-size: 0.9rem;
+          gap: 0.3rem;
           list-style: none;
         }
         img {
           max-height: 3rem;
           max-width: 7.5rem;
+          cursor: pointer;
         }
       }
     }

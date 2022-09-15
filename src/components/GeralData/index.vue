@@ -38,55 +38,47 @@
             {{ transparencyArrayList?.dados_gerais.direito_certificacao }}
           </h2>
         </div>
-        <div>
-          <span>
-            <img src="/assets/hat.svg" alt="" />
-            <p>Investimento médio por curso</p>
-          </span>
-          <h2>
-            R$
-            {{ transparencyArrayList?.dados_gerais.investimento_medio_curso }}
-          </h2>
-        </div>
-        <div>
-          <span>
-            <img src="/assets/userCamera.svg" alt="" />
-            <p>Investimento médio por aluno</p>
-          </span>
-          <h2>
-            R$
-            {{ transparencyArrayList?.dados_gerais.investimento_medio_aluno }}
-          </h2>
-        </div>
+          <div>
+            <span>
+              <img src="/assets/hat-money.svg" alt="" />
+              <p>Investimento médio por curso</p>
+            </span>
+            <h2>
+              R$
+              {{ transparencyArrayList?.dados_gerais.investimento_medio_curso }}
+            </h2>
+          </div>
+          <div>
+            <span>
+              <img src="/assets/userCamera.svg" alt="" />
+              <p>Investimento médio por aluno</p>
+            </span>
+            <h2>
+              R$
+              {{ transparencyArrayList?.dados_gerais.investimento_medio_aluno }}
+            </h2>
+          </div>
       </div>
     </div>
     <div class="divisor">
       <div class="pizza">
         <h2>Usuários por curso</h2>
 
-        <img src="/assets/pizza.png" alt="" />
-        <div
+        <slot name="pizza"></slot>
+        <!-- <div
           class="courses-pizza"
           v-for="data in transparencyArrayList.usuarios_por_curso"
           :key="data.curso"
         >
           <p>{{ data.curso }}: {{ data.usuarios }}</p>
-        </div>
+        </div> -->
       </div>
       <div class="pizza">
-        <h2>Usuários por curso</h2>
+        <h2>Usuários por Estado</h2>
 
-        <img src="/assets/map.png" alt="" />
-        <div
-          class="courses-map"
-          v-for="data in transparencyArrayList.usuarios_por_estado.slice(0, 4)"
-          :key="data.estados"
-        >
-          <p>
-            Estado {{ data.estados }} / Usuários matriculados
-            {{ data.direito_certificacao }}
-          </p>
-          <p></p>
+        <slot name="map"></slot>
+        <div class="courses-map">
+          <p>Usuários matriculados p/ estado</p>
         </div>
       </div>
     </div>
@@ -140,32 +132,42 @@ export default class GeralData extends Vue {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 70rem;
+  width: 80vw;
   max-height: 20rem;
   background: #f5f5f7;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 1.125rem;
 
   .title {
-    color: #7dc143;
+    color: #f6303f;
     margin: 1rem 0;
   }
 
   .transparency-data {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
+    grid-template-rows: 1fr 1fr;
     align-items: center;
+    padding: 1rem;
     width: 100%;
     gap: 1.6rem;
-    grid-template-rows: 1fr 1fr;
+
+    .last-data {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      right: 0;
+      left: 0;
+    }
 
     div {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       align-items: center;
-      padding: 0.2rem 2rem;
+      padding: 0.2rem;
       justify-content: center;
       span {
         display: flex;
@@ -174,13 +176,17 @@ export default class GeralData extends Vue {
         flex-direction: row;
         gap: 0.4rem;
 
+        img {
+          color: #f6303f;
+        }
+
         p {
           font-weight: bold;
           white-space: nowrap;
         }
       }
       h2 {
-        color: #7dc143;
+        color: #f6303f;
       }
     }
   }
@@ -192,7 +198,8 @@ export default class GeralData extends Vue {
   width: 100%;
   height: 100%;
   align-items: center;
-  justify-content: space-between;
+
+  justify-content: space-around;
 }
 
 .pizza {
@@ -209,7 +216,7 @@ export default class GeralData extends Vue {
   margin: 1rem 0;
 
   h2 {
-    color: #7dc143;
+    color: #f6303f;
     margin: 0.5rem;
   }
 
@@ -229,13 +236,14 @@ export default class GeralData extends Vue {
   }
   .courses-map {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
     font-weight: bold;
-    align-items: center;
-    justify-content: center;
-    img {
-      height: 23.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: start;
+    p {
+      font-size: 80%;
+      padding: 1rem;
     }
   }
 }
