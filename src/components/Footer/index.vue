@@ -56,22 +56,7 @@ enum CarouselDirecitons {
 @Component({
   components: {},
 })
-export default class CustomFooter extends Vue {
-  
-
-  public method() {
-
-const arr = ['1', '2', '2', '1', '3', '3']
-const nonRepeatArr = [...new Set(arr)]
-
-console.log(nonRepeatArr) // ['1', '2', '3']
-
-  }
-
-  public mounted() {
-    this.method()
-  }
-}
+export default class CustomFooter extends Vue {}
 </script>
 
 <style scoped lang="scss">

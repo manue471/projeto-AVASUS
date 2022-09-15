@@ -82,7 +82,6 @@ export default class Paginate extends Vue {
   }
 
   public mounted() {
-    console.log(this.displayedContent);
     this.$emit("update:value", this.displayedContent);
   }
 }

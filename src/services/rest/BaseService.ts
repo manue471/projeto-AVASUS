@@ -68,8 +68,6 @@ export default class BaseService<T> {
                 data: response.data,
             };
         } catch (error: any) {
-            console.log(error);
-            
             throw {
                 response: error?.response,
                 data: error?.response?.data,
@@ -90,7 +88,6 @@ export default class BaseService<T> {
                 data: response.data,
             };
         } catch (error: any) {
-            console.log(error);
 
             throw {
                 response: error?.response,
