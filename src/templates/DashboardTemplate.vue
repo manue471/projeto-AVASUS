@@ -45,7 +45,7 @@ export default class DashBoardTemplate extends Vue {
 .application {
   display: grid;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   grid-template-rows: 6.25rem 1fr 35rem;
 }
 
