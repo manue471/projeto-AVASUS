@@ -28,10 +28,11 @@
               :active-color="'#F6303F'"
               :readonly="true"
               :increment="0.01"
+              :fixed-points="2"
             />
           </span>
         </div>
-        <router-link :to="{ path: `single-module/${course.id}` }" class="normal"
+        <router-link :to="{ path: `single-module/${course.id}` }" class="normal see-more"
           >Ver módulo</router-link
         >
       </div>
@@ -71,7 +72,7 @@ export default class ModuleCardPreview extends Vue {
   width: max-content;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-around;
   gap: 1rem;
   margin: 1rem 0;
   max-width: 63rem;
@@ -153,5 +154,9 @@ a {
   font-weight: bold;
   cursor: pointer;
   border: none;
+}
+
+.see-more {
+  margin-left: auto;
 }
 </style>

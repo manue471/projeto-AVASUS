@@ -32,6 +32,7 @@
                 :active-color="'#F6303F'"
                 :readonly="true"
                 :increment="0.01"
+                :fixed-points="2"
               />
             </span>
           </div>
@@ -202,6 +203,12 @@ a {
 .border { 
   border-bottom: #707070 2px solid;
   color: #707070;
+}
+
+.category-box {
+  a {
+    padding-bottom: 0.5rem;
+  }
 }
 .categorie-filter {
   display: flex;

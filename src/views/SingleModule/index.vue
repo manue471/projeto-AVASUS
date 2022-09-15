@@ -29,6 +29,7 @@
             :active-color="'#F6303F'"
             :readonly="true"
             :increment="0.01"
+            :fixed-points="2"
           />
           <p>({{ course?.numero_avaliacoes }} avaliações)</p>
         </span>
@@ -134,7 +135,7 @@ export default class SingleModule extends Vue {
 
     this.course = data;
     if (this.course) {
-      this.course.avaliacao = parseFloat(this.course.avaliacao);
+      this.course.avaliacao = parseFloat(`${this.course.avaliacao}`);
     }
     return this.course;
   }
@@ -156,6 +157,7 @@ export default class SingleModule extends Vue {
   min-height: 17rem;
   height: 100%;
   display: flex;
+  background: #F6303F;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -177,7 +179,8 @@ export default class SingleModule extends Vue {
   }
   
   img {
-    filter: opacity(0.5) drop-shadow(red 0 0 0);
+    // filter: opacity(0.6);
+    mix-blend-mode: multiply;
     height: 100%;
     width: 100%;
     position: absolute;
@@ -258,8 +261,8 @@ export default class SingleModule extends Vue {
   margin: 1rem 0;
   div {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
     justify-content: space-evenly;
     align-items: center;
     padding: 1rem;
