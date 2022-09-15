@@ -1,41 +1,35 @@
 <template>
   <div class="home">
     <div class="top-content">
-      <h1>Especialização PEPSUS</h1>
-      <p>Conheça o curso de Especialização em Saúde da Família</p>
-      <button class="normal" @click="$router.push({ path: `single-module/${2}` })">Acesse</button>
       <carousel :carouselItems="carouselImages" />
     </div>
 
     <div class="modules-preview">
       <h2>Módulos Educacionais</h2>
-      <div class="modules-preview-nav">
-        <ul>
-          <li>
-            <router-link :to="{ name: 'home' }">Mais populares</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'home' }">Mais bem avaliados</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'home' }">Mais recentes</router-link>
-          </li>
-        </ul>
-      </div>
+
       <div class="modules-preview-cards">
         <module-card-preview
-          v-for="course in courses?.slice(0, 3)"
-          :key="course.id"
-          :cardImage="course.capa"
-          :cardTitle="course.titulo"
-          :cardPartners="course.parceiros"
-          :cardPeople="course.matriculados"
-          :cardRate="course.avaliacao"
-          :cardId="course.id"
-        />
+          :moduleArray="courses"
+        >
+          <div class="modules-preview-nav">
+            <ul>
+              <li>
+                <a :class="active == 1 ? 'border' : ''" @click="filterByPopular(1)">Mais populares</a>
+              </li>
+              <li>
+                <a :class="active == 2 ? 'border' : ''" @click="filterByRating(2)">Mais bem avaliados</a>
+              </li>
+              <li>
+                <a :class="active == 3 ? 'border' : ''" @click="filterByRecent(3)">Mais recentes</a>
+              </li>
+            </ul>
+          </div>
+        </module-card-preview>
       </div>
       <div class="see-more">
-        <button class="normal" @click="$router.push({ name: 'modules' })">Ver mais</button>
+        <button class="normal" @click="$router.push({ name: 'modules' })">
+          Ver mais
+        </button>
       </div>
     </div>
 
@@ -97,29 +91,66 @@ const courseService = new CoursesService();
 export default class HomeView extends Vue {
   public courses: CoursesModel[] | undefined;
   public carouselImages: string[];
+  public active: number = 1 | 2 | 3
 
   constructor() {
     super();
     this.courses = Array(new CoursesModel());
     this.carouselImages = [
       "/assets/dashboardImage.png",
-      "/assets/dashboardImage.png",
-      "/assets/dashboardImage.png",
+      "https://lais.huol.ufrn.br/wp-content/uploads/2020/04/thumb-default.jpg",
+      "https://lais.huol.ufrn.br/wp-content/uploads/2022/04/salus.png",
     ];
   }
 
   // Methods
-  public async handleGetCourses(): Promise<CoursesModel[] | undefined> {
+  public async handleGetCourses(): Promise<void> {
     const { data } = await courseService.getAll();
-    data?.map((course: any) => {
+    (data as CoursesModel[]).map((course: any) => {
       course.avaliacao = Number(course.avaliacao);
     });
 
-    return (this.courses = data);
+    this.courses = data as CoursesModel[];
+  }
+  public filterByRecent(active: number) {
+    this.courses?.sort((a, b) => {
+      const dateA = new Date(a.criado_em?.split("/").reverse().join("-"));
+      const dateB = new Date(b.criado_em?.split("/").reverse().join("-"));
+      if (dateA > dateB) {
+        return -1;
+      }
+      return +1;
+    });
+    this.active = active
   }
 
-  public async mounted(): Promise<CoursesModel[] | undefined> {
-    return await this.handleGetCourses();
+  public filterByRating(active: number) {
+    this.courses?.sort((a, b) => {
+      const ratingA = a.avaliacao;
+      const ratingB = b.avaliacao;
+      if (ratingA > ratingB) {
+        return -1;
+      }
+      return +1;
+    });
+    this.active = active
+
+  }
+
+  public filterByPopular(active: number) {
+    this.courses?.sort((a, b) => {
+      const ratingA = a.matriculados;
+      const ratingB = b.matriculados;
+      if (ratingA > ratingB) {
+        return -1;
+      }
+      return +1;
+    });
+    this.active = active
+  }
+
+  public async mounted(): Promise<void> {
+    await this.handleGetCourses();
   }
 }
 </script>
@@ -133,16 +164,15 @@ export default class HomeView extends Vue {
   .top-content {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
     background: #ececec;
     width: 100%;
-    padding: 1rem;
+    height: auto;
     align-items: center;
     justify-content: center;
 
     h1 {
       font-size: 3.75rem;
-      color: #7dc143;
+      color: #F6303F;
     }
     p {
       font-size: 1.875rem;
@@ -150,7 +180,7 @@ export default class HomeView extends Vue {
     }
   }
   h2 {
-    color: #7dc143;
+    color: #F6303F;
     margin: 1.5rem 0;
     font-size: 1.875rem;
   }
@@ -184,10 +214,7 @@ export default class HomeView extends Vue {
         a {
           text-decoration: none;
           color: black;
-        }
-
-        &:first-child {
-          border-bottom: 2px solid #d16fff;
+          height: 1.7rem;
         }
       }
     }
@@ -226,10 +253,16 @@ export default class HomeView extends Vue {
     span {
       display: flex;
       flex-direction: column;
-      gap: 1rem;overflow-wrap: break-word;
+      gap: 1rem;
+      overflow-wrap: break-word;
       font-size: 1.25rem;
       font-weight: 600;
     }
   }
+}
+
+.border {
+  border-bottom: #707070 2px solid;
+  color: #707070;
 }
 </style>
