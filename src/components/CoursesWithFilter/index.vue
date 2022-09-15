@@ -1,9 +1,14 @@
 <template>
   <div class="courses-filter">
+    <div class="categorie-filter">
+      <span v-for="category in categorieArray.slice(0, 13)" :key="category" class="category-box" >
+        <a :class="selectedCategory == category && 'border'" @click="filterByCategorie(category, cardArray)">{{ category }}</a>
+      </span>
+    </div>
     <div class="card-grid">
       <div
         class="card"
-        v-for="course in cardArray"
+        v-for="course in paginatedArray"
         :key="course.id"
       >
         <div class="card-header">
@@ -24,7 +29,7 @@
               <star-rating
                 :rating="course?.avaliacao"
                 :star-size="30"
-                :active-color="'#7DC143'"
+                :active-color="'#F6303F'"
                 :readonly="true"
                 :increment="0.01"
               />
@@ -54,33 +59,37 @@ import StarRating from "vue-star-rating";
   },
 })
 export default class CoursesWIthFilter extends Vue {
-  public filter:
-    | string
-    | "Especialização"
-    | "Módulo de extensão"
-    | "Síflis e outras ist"
-    | "Covid 19"
-    | "Preceptoria";
-
+  public selectedCategory: string;
   constructor() {
     super();
-    this.filter = "";
-  }
-
-  // Computed:
-  public get courseId(): any {
-    return this.$route.params.id;
+    this.selectedCategory = '';
   }
 
   // Props:
   @Prop({
     required: false,
   })
-  readonly categorieArray!: any[];
+  readonly categorieArray!: string[];
+  @Prop({
+    required: true,
+  })
+  paginatedArray!: CoursesModel[];
   @Prop({
     required: true,
   })
   readonly cardArray!: CoursesModel[];
+
+  // Computed:
+  public get courseId(): any {
+    return this.$route.params.id;
+  }
+
+  // Methods:
+  public filterByCategorie(category: string, arrayToFilter: CoursesModel[]) {
+    const response = arrayToFilter.filter((item) => item.cateroria == category)
+    this.selectedCategory = category
+    this.paginatedArray = response.slice(0, 6)
+  }
 }
 </script>
 
@@ -125,7 +134,7 @@ export default class CoursesWIthFilter extends Vue {
 .card {
   display: flex;
   height: max-content;
-  max-width: 21.875rem;
+  max-width: 20rem;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -148,7 +157,7 @@ export default class CoursesWIthFilter extends Vue {
 .card-partners {
   text-align: left;
   width: 100%;
-  color: #7dc143;
+  color: #F6303F;
   font-size: 13px;
 }
 
@@ -176,15 +185,29 @@ export default class CoursesWIthFilter extends Vue {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 4rem;
+  gap: 6rem;
 }
 
 a {
   display: flex;
   align-self: flex-end;
   text-decoration: none;
-  color: #d16fff;
-  font-size: 1.2rem;
+  color: #2F2E41;
+  font-size: 0.85rem;
   font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+.border { 
+  border-bottom: #707070 2px solid;
+  color: #707070;
+}
+.categorie-filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 2.5rem;
 }
 </style>
