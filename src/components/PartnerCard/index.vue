@@ -1,15 +1,16 @@
 <template>
   <div class="partner">
-    <div class="partner-header">
-      <img :src="partnerImage" alt="capa do módulo" />
+    <div class="partner-header" v-for="partner in partnersArray" :key="partner.id">
+      <img :src="partner.capa" alt="capa do módulo" />
 
-      <h2>{{ partnerTitle }}</h2>
+      <h2>{{ partner.titulo }}</h2>
     </div>
   </div>
 </template>
 
 <script lang="ts" scoped>
 // Vue
+import { PartnersModel } from "@/models/Partners";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
@@ -20,28 +21,21 @@ import { Component, Prop } from "vue-property-decorator";
 export default class ModuleCard extends Vue {
   // Props:
   @Prop({
-    default: "/assets/sifilisPhoto.png",
-    required: false,
+    required: true
   })
-  readonly partnerImage!: string;
-
-  @Prop({
-    default: "Sífilis: Vigilância Epidemiológica",
-    required: false,
-  })
-  readonly partnerTitle!: string;
+  readonly partnersArray!: PartnersModel[]
 }
 </script>
 
 <style lang="scss" scoped>
 .partner {
-  display: flex;
-  height: max-content;
-  max-width: 21.875rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4rem;
+  padding: 0;
+  max-width: 80%;
+  margin: 2rem 0;
 }
 
 .partner-header {
@@ -54,11 +48,18 @@ export default class ModuleCard extends Vue {
   padding: 1rem;
 
   img {
-    max-width: 21.875rem;
+    max-width: 19rem;
     max-height: 12.5rem;
     height: 100%;
     width: 100%;
     border-radius: 1.23rem;
+  }
+
+  h2 {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-top: #F6303F 2px solid;
   }
 }
 
