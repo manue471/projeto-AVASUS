@@ -26,7 +26,7 @@
           <star-rating
             :rating="course?.avaliacao"
             :star-size="30"
-            :active-color="'#7DC143'"
+            :active-color="'#F6303F'"
             :readonly="true"
             :increment="0.01"
           />
@@ -148,7 +148,7 @@ export default class SingleModule extends Vue {
 .single-module {
   width: 100vw;
   h1 {
-    color: #7dc143;
+    color: #F6303F;
   }
 }
 .banner {
@@ -175,8 +175,9 @@ export default class SingleModule extends Vue {
       font-size: 1.8rem;
     }
   }
+  
   img {
-    filter: opacity(0.5) drop-shadow(0 0 0 green);
+    filter: opacity(0.5) drop-shadow(red 0 0 0);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -212,7 +213,7 @@ export default class SingleModule extends Vue {
 
   h2 {
     font-weight: 600;
-    color: #7dc143;
+    color: #F6303F;
     margin: 1rem 0;
   }
   div {
@@ -243,7 +244,7 @@ export default class SingleModule extends Vue {
   align-items: center;
   justify-content: center;
   span {
-    margin: 1rem 2rem;
+    margin: 1rem 1rem;
     font-weight: bold;
     display: flex;
     flex-direction: row;
