@@ -2,16 +2,23 @@
   <div class="paginate">
     <slot v-bind="displayedContent"></slot>
     <div class="btn-group">
-      <button class="outline" type="button" v-if="page !== 1" @click="page--">Anterior</button>
+      <button class="outline" type="button" v-if="page !== 1" @click="page--">
+        Anterior
+      </button>
       <button
-        :class="page == pageNumber ? 'normal' : 'outline'"
+        :class="page == pageNumber ? 'active' : ''"
         v-for="pageNumber in pages.slice(page - 1, page + 5)"
         @click="page = pageNumber"
         :key="pageNumber"
       >
         {{ pageNumber }}
       </button>
-      <button class="outline" type="button" @click="page++" v-if="page < pages.length">
+      <button
+        class="outline"
+        type="button"
+        @click="page++"
+        v-if="page < pages.length"
+      >
         Próximo
       </button>
     </div>
@@ -49,7 +56,7 @@ export default class Paginate extends Vue {
   }
 
   public set displayedContent(value: any[]) {
-    this.$emit('input', value)
+    this.$emit("input", value);
   }
 
   // Methods
@@ -76,7 +83,7 @@ export default class Paginate extends Vue {
 
   public mounted() {
     console.log(this.displayedContent);
-    this.$emit('update:value', this.displayedContent)
+    this.$emit("update:value", this.displayedContent);
   }
 }
 </script>
@@ -96,6 +103,26 @@ export default class Paginate extends Vue {
   flex-direction: row;
   gap: 0.3rem;
   justify-content: center;
-}
+  margin-bottom: 2rem;
 
+  button {
+    background: #f1dadb;
+    color: #b9232f;
+    border: none;
+    border-radius: 0;
+    height: 2rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+
+    &:hover {
+      background: #b9232f;
+      color: white;
+    }
+  }
+
+  .active {
+    background: #b9232f;
+    color: white;
+  }
+}
 </style>
