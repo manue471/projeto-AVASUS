@@ -1,4 +1,3 @@
-Fiz o projeto meio corrido, perdão pela falta de requisitos, mas o código está bem caprichado 
 
 ## Como rodar o projeto
 
@@ -7,6 +6,10 @@ Fiz o projeto meio corrido, perdão pela falta de requisitos, mas o código est�
 yarn install
 
 yarn serve
+
+## API para consumir
+
+https://github.com/lais-huol/edital-25-22-modulos-educacionais
 
 ## Depois só rodar o backend na sua maquina localmente e fazer o teste
 
